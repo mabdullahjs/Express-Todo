@@ -20,7 +20,7 @@ app.use('/' , productRouter);
 
 //database connection
 
-const connectionString = process.env.ATLAS_URI || "";
+const connectionString = process.env.ATLAS_URI || "mongodb+srv://mabdullah2037:bustop123@todo-app.b5uowbs.mongodb.net/";
 const client = new MongoClient(connectionString);
 let conn;
 try {
