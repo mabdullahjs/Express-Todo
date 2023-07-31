@@ -3,6 +3,9 @@ import { MongoClient } from "mongodb";
 import express from "express";
 import { productRouter } from "./routes/productRoute.mjs";
 import cors from "cors"
+import path from "path"
+
+const _dirname = path.resolve();
 
 //dot env config
 dotenv.config();
@@ -12,10 +15,8 @@ const app = express();
 app.use(cors())
 app.use(express.json());
 
-app.get("/", (req , res)=>{
-    res.send("hello server")
-} );
-app.use('/' , productRouter);
+app.use('/api/v1' , productRouter);
+app.use(express.static(path.join(_dirname , "./public/index.html")))
 
 
 //database connection
