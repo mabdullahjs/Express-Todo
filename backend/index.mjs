@@ -15,19 +15,27 @@ const app = express();
 app.use(cors())
 app.use(express.json());
 
-app.use('/api/v1' , productRouter);
-app.use(express.static(path.join(_dirname , "./public/index.html")))
+app.use('/api/v1', productRouter);
+
+// Serve static files from the 'build' folder
+app.use(express.static(path.join(_dirname, 'build')));
+
+// This route will catch all other routes and serve the 'index.html' from the 'build' folder
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
+
 
 
 //database connection
 
-const connectionString = process.env.ATLAS_URI || "mongodb+srv://mabdullah2037:bustop123@todo-app.b5uowbs.mongodb.net/";
+const connectionString = process.env.ATLAS_URI;
 const client = new MongoClient(connectionString);
 let conn;
 try {
   conn = await client.connect();
   console.log("database connected")
-} catch(e) {
+} catch (e) {
   console.error(e);
 }
 
